@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0f14">
+<meta name="description" content="Ripped Kitchen nutrition, meal prep, training and physique progress dashboard">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ripped Kitchen">
+<title>Ripped Kitchen</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="app">
+<header class="macro-grid">
+  <article class="metric"><div id="fillCal" class="metric-fill"></div><div class="metric-inner"><span>Calories</span><strong id="calVal">0 / 2000</strong></div></article>
+  <article class="metric"><div id="fillPro" class="metric-fill"></div><div class="metric-inner"><span>Protein</span><strong id="proVal">0 / 180g</strong></div></article>
+  <article class="metric"><div id="fillCarb" class="metric-fill"></div><div class="metric-inner"><span>Carbs</span><strong id="carbVal">0 / 190g</strong></div></article>
+  <article class="metric"><div id="fillFat" class="metric-fill"></div><div class="metric-inner"><span>Fat</span><strong id="fatVal">0 / 58g</strong></div></article>
+</header>
+<button id="installApp" class="primary install hidden">Install Ripped Kitchen</button>
+
+<main>
+<section id="home" class="page active stack">
+  <article class="card stack">
+    <div class="datebar"><button id="prevDate" class="square">←</button><div><input id="dateInput" type="date" class="input date-input"><div id="dayLabel" class="weekday">—</div></div><button id="nextDate" class="square">→</button></div>
+    <label class="field">Training type<select id="trainingType" class="input"><option value="gym">Gym</option><option value="mma">MMA</option><option value="football">Football</option><option value="rest">Rest day</option></select></label>
+    <div id="trainingHint" class="callout"></div>
+    <button id="resetDay" class="secondary danger">Reset selected day</button>
+  </article>
+
+  <div class="stats-grid"><article class="card"><span class="muted">Start</span><strong>83.0 kg</strong></article><article class="card"><span class="muted">Deadline</span><strong>15 Dec</strong></article><article class="card"><span class="muted">Countdown</span><strong id="countdown">—</strong></article><article class="card"><span class="muted">Target pace</span><strong>0.5–0.75</strong><span class="muted">kg/week</span></article></div>
+
+  <div class="section-head"><div><h2>Today's plan</h2><p>Tap a meal when you finish it.</p></div><span id="mealCount" class="badge">0 / 5 done</span></div>
+  <div id="mealList" class="stack"></div>
+
+  <article class="card stack"><h2>Daily execution</h2>
+    <div class="check-grid"><label class="check"><input type="checkbox" data-task="steps">8,000–10,000 steps</label><label class="check"><input type="checkbox" data-task="water">~3L water + training fluids</label><label class="check"><input type="checkbox" data-task="protein">175–180g protein</label><label class="check"><input type="checkbox" data-task="training">Training / recovery completed</label><label class="check"><input type="checkbox" data-task="sleep">7.5–9h sleep</label><label class="check"><input type="checkbox" data-task="tracking">No untracked calorie-dense extras</label></div>
+    <div class="four-fields"><label class="field">Steps<input id="steps" type="number" step="500" class="input"></label><label class="field">Training min<input id="mins" type="number" step="5" class="input"></label><label class="field">Water L<input id="water" type="number" step="0.25" class="input"></label><label class="field">Sleep hrs<input id="sleep" type="number" step="0.25" class="input"></label></div>
+    <div><div class="between"><span>Daily progress</span><strong id="dailyPct">0%</strong></div><div class="progress"><div id="dailyBar"></div></div></div>
+  </article>
+
+  <article class="card stack"><h2>Quick check-in</h2><div class="two-fields"><label class="field">Weight kg<input id="weight" type="number" step="0.1" class="input"></label><label class="field">Waist cm<input id="waist" type="number" step="0.1" class="input"></label></div><button id="saveCheckin" class="primary">Save check-in for this date</button><p id="checkStatus" class="muted"></p></article>
+
+  <article id="finalBanner" class="card success hidden"><div class="between"><div><h2>Day finalised ✓</h2><p id="finalText" class="muted"></p></div><span class="badge">Saved</span></div></article>
+  <article class="card stack"><h2>Finalise this day</h2><p class="muted">Saves the selected day's meals, macros, execution, activity and check-in so you can return to it later.</p><button id="finalise" class="primary">Finalise daily progress</button><div id="summary" class="summary-grid hidden"></div><p class="small muted">Activity calories are a rough estimate, not a metabolic measurement and not an instruction to eat them back.</p></article>
+  <article class="card"><div class="between"><h2>Saved history</h2><span class="small muted">tap a date</span></div><div id="historyBox" class="history"></div></article>
+</section>
+
+<section id="recipes" class="page stack"><div class="section-head"><div><h1>Recipe book</h1><p>Macros → exact ingredients → detailed steps.</p></div></div><select id="recipeSelect" class="input"></select><div id="recipeBox"></div></section>
+
+<section id="prep" class="page stack"><div class="section-head"><div><h1>Meal-prep command centre</h1><p>Batch weights, ingredient quantities and exact packing for all five containers.</p></div></div><div class="prep-tabs"><button data-prep="sun">Sunday</button><button data-prep="wed">Wednesday</button><button data-prep="fri">Friday</button></div><div id="prepBox"></div></section>
+
+<section id="body" class="page stack"><div class="section-head"><div><h1>Matrix physique tracker</h1><p id="bodyDate"></p></div><span id="bodyPhase" class="badge">Starting phase</span></div>
+<div class="body-layout"><div class="matrix-wrap"><svg viewBox="0 0 320 520" role="img" aria-label="Schematic Matrix physique progress model"><g class="gridline"><path d="M20 70H300M20 140H300M20 210H300M20 280H300M20 350H300M20 420H300"/><path d="M70 20V495M115 20V495M160 20V495M205 20V495M250 20V495"/></g><rect class="scan" x="35" y="30" width="250" height="3" rx="2"/><g id="human" class="outline"><path d="M143 25C132 31 127 43 128 57C129 72 138 82 160 84C182 82 191 72 192 57C193 43 188 31 177 25C168 20 152 20 143 25Z"/><path d="M143 84C138 94 132 99 125 104M177 84C182 94 188 99 195 104"/><path d="M125 104C108 109 94 117 84 135C75 154 72 179 77 203C81 222 90 240 99 258C105 274 108 295 108 317C108 338 104 355 107 373C110 389 118 403 126 413M195 104C212 109 226 117 236 135C245 154 248 179 243 203C239 222 230 240 221 258C215 274 212 295 212 317C212 338 216 355 213 373C210 389 202 403 194 413"/><path d="M84 136C68 151 60 174 60 200C60 226 68 250 82 269C88 278 93 288 96 299M236 136C252 151 260 174 260 200C260 226 252 250 238 269C232 278 227 288 224 299"/><path d="M60 200C55 223 55 245 61 264C66 281 75 295 87 306M260 200C265 223 265 245 259 264C254 281 245 295 233 306"/><path d="M126 413C127 435 127 458 123 482L118 507M194 413C193 435 193 458 197 482L202 507M126 413C138 406 149 403 160 403C171 403 182 406 194 413M108 317C124 325 141 330 160 330C179 330 196 325 212 317"/></g><g id="definition" class="detail"><path d="M111 124C124 137 139 144 154 145M209 124C196 137 181 144 166 145M160 146V317"/><path d="M132 164C143 169 152 169 160 167M188 164C177 169 168 169 160 167M129 195C141 201 151 201 160 198M191 195C179 201 169 201 160 198M128 227C141 233 151 233 160 230M192 227C179 233 169 233 160 230M130 259C143 265 152 265 160 262M190 259C177 265 168 265 160 262"/><path d="M102 158C115 164 123 175 125 188M218 158C205 164 197 175 195 188M113 340C128 350 143 355 158 355M207 340C192 350 177 355 162 355"/></g></svg></div>
+<div class="stack"><article class="card stack"><h2>Selected-date check-in</h2><label class="field">Weight kg<input id="bodyWeight" type="number" step="0.1" class="input"></label><label class="field">Waist cm<input id="bodyWaist" type="number" step="0.1" class="input"></label><button id="bodySave" class="primary">Save & update model</button></article><div class="two-fields"><article class="card"><span class="muted">Start</span><strong>83.0kg</strong></article><article class="card"><span class="muted">Change</span><strong id="bodyDelta">0.0kg</strong></article></div><article class="card"><h2>Check-in history</h2><div id="bodyHistory"></div></article><p class="small muted">This is a schematic progress visualisation, not a body-fat estimator or anatomical inference.</p></div></div></section>
+</main>
+</div>
+
+<nav class="bottom-nav"><button data-page="home" class="active"><span>⌂</span><small>Home</small></button><button data-page="recipes"><span>◫</span><small>Recipes</small></button><button data-page="prep"><span>≡</span><small>Prep</small></button><button data-page="body"><span>◇</span><small>Body</small></button></nav>
+<script src="./data.js"></script><script src="./app.js"></script>
+</body></html>
